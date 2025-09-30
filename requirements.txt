@@ -11,3 +11,4 @@ pypdf==6.1.0
 reportlab==4.4.4
 streamlit==1.50.0
 tzdata==2025.2
+gspread-dataframe==4.0.0
