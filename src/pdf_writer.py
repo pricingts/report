@@ -26,7 +26,6 @@ def build_overlay(df: pd.DataFrame, client_name: str, language: str, template_pa
                   LEFT_MARGIN=100, RIGHT_MARGIN=65, BOTTOM_MARGIN=100, TOP_GAP=300,
                   ROWS_PER_PAGE=11) -> bytes:
 
-
     page_width, page_height = _get_template_size_points(template_path)
 
     buf = io.BytesIO()

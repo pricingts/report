@@ -46,6 +46,9 @@ def preprocess_df(df: pd.DataFrame, hub: str) -> pd.DataFrame:
 
     if df is None or df.empty:
         return pd.DataFrame()
+    
+    df = df.fillna("None")                  
+    df = df.replace(r'^\s*$', "None", regex=True)
 
     df = df.rename(columns={col: COLUMN_RENAMES[col] for col in df.columns if col in COLUMN_RENAMES})
     if "VOL" in df.columns and "UNIT" in df.columns:
@@ -62,5 +65,6 @@ def preprocess_df(df: pd.DataFrame, hub: str) -> pd.DataFrame:
     else:
         if "MBL_MAWB HBL_HAWB" in df.columns and "MBL_MAWB HBL_HAWB" in df.columns:
             df["BILL"] = df["MBL_MAWB HBL_HAWB"].astype(str).str.strip() + "/ " + df["BOOKING"].astype(str).str.strip()
+
 
     return df
