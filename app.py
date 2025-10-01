@@ -67,8 +67,13 @@ with col2:
         df_pdf["STATUS"] = df_pdf["STATUS"].apply(lambda v: translate_status(v, language))
 
         if "COMENTARIOS" in df_pdf.columns:
-            cols = [c for c in df_pdf.columns if c != "COMENTARIOS"] + ["COMENTARIOS"]
-            df_pdf = df_pdf[cols]
+            # Si está totalmente vacía → eliminar
+            if df_pdf["COMENTARIOS"].astype(str).str.strip().replace("None", "").eq("").all():
+                df_pdf = df_pdf.drop(columns=["COMENTARIOS"])
+            else:
+                # Si tiene valores → enviarla al final
+                cols = [c for c in df_pdf.columns if c != "COMENTARIOS"] + ["COMENTARIOS"]
+                df_pdf = df_pdf[cols]
 
         # 🔹 Crear overlay
         from src.pdf_writer import build_overlay, merge_with_template
